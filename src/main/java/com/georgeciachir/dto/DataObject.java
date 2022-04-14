@@ -4,6 +4,9 @@ public class DataObject {
 
     public String message;
 
+    public DataObject() {
+    }
+
     public DataObject(String message) {
         this.message = message;
     }

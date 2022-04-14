@@ -21,16 +21,21 @@ public class AppController {
 
     @GetMapping("/hello/{name}")
     public String hello(@PathVariable String name) {
+        LOG.info("Greeting [{}]", name);
         return String.format("Hello, %s!", name);
     }
 
     @PostMapping("/webhook")
-    public void receiveEventGridEvent(@RequestBody String eventGridEventJsonData) {
+    public String receiveEventGridEvent(@RequestBody String eventGridEventJsonData) {
+        LOG.info("Receiving via webhook");
+
         List<EventGridEvent> eventGridEvents = EventGridEvent.fromString(eventGridEventJsonData);
 
         EventGridEvent event = eventGridEvents.get(0);
 
         DataObject dataObject = event.getData().toObject(DataObject.class);
         LOG.info(dataObject.toString());
+
+        return dataObject.toString();
     }
 }
