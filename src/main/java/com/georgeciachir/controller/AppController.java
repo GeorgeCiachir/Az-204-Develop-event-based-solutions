@@ -51,9 +51,19 @@ public class AppController {
 
         EventGridEvent event = eventGridEvents.get(0);
 
-        DataObject dataObject = event.getData().toObject(DataObject.class);
-        LOG.info(dataObject.toString());
-
-        return dataObject.toString();
+        switch (event.getEventType()) {
+            case "Microsoft.Storage.BlobCreated":
+                LOG.info("Event is: {}", event.getData().toString());
+                return event.getData().toString();
+            case "GreetingSomeone":
+                DataObject dataObject = event.getData().toObject(DataObject.class);
+                LOG.info("Event is: {}", dataObject);
+                return dataObject.toString();
+            case "BlobCreationForwardedEventAsBinaryData":
+                LOG.info("Event is: {}", event.getData().toString());
+                return event.getData().toString();
+            default:
+                throw new IllegalArgumentException("Not yet implemented");
+        }
     }
 }

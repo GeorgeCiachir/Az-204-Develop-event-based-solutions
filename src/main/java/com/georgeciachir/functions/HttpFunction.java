@@ -47,7 +47,7 @@ public class HttpFunction {
 
         BinaryData binaryData = BinaryData.fromObject(new DataObject(message));
         EventGridEvent event = new EventGridEvent(
-                "Greeting", "Greeting someone", binaryData, "1.0"
+                "Greeting", "GreetingSomeone", binaryData, "1.0"
         );
         eventGridEventClient.sendEvent(event);
 
