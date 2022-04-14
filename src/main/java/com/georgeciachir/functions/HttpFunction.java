@@ -1,5 +1,11 @@
 package com.georgeciachir.functions;
 
+import com.azure.core.credential.AzureKeyCredential;
+import com.azure.core.util.BinaryData;
+import com.azure.messaging.eventgrid.EventGridEvent;
+import com.azure.messaging.eventgrid.EventGridPublisherClient;
+import com.azure.messaging.eventgrid.EventGridPublisherClientBuilder;
+import com.georgeciachir.dto.DataObject;
 import com.microsoft.azure.functions.ExecutionContext;
 import com.microsoft.azure.functions.HttpMethod;
 import com.microsoft.azure.functions.HttpRequestMessage;
@@ -12,6 +18,10 @@ import com.microsoft.azure.functions.annotation.HttpTrigger;
 import java.util.Optional;
 
 public class HttpFunction {
+
+    private static final String TOPIC_URL = "https://mycustomtopic.westeurope-1.eventgrid.azure.net/api/events";
+    private static final String KEY = "6pP7htfp00S+sALuY5jdRpmzIm+ExTS9vWbof2yu3j4=";
+
     /**
      * "/api/http-function?name=George"
      */
@@ -28,13 +38,20 @@ public class HttpFunction {
         // Parse query parameter
         String name = request.getQueryParameters().get("name");
 
-        if (name == null) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
-                    .body("Please pass a name on the query string")
-                    .build();
-        } else {
-            return request.createResponseBuilder(HttpStatus.OK)
-                    .body("Hello, " + name).build();
-        }
+        String message = name == null ? "Hello, Anonymous!" : "Hello, " + name + "!";
+
+        EventGridPublisherClient<EventGridEvent> eventGridEventClient = new EventGridPublisherClientBuilder()
+                .endpoint(TOPIC_URL)
+                .credential(new AzureKeyCredential(KEY))
+                .buildEventGridEventPublisherClient();
+
+        BinaryData binaryData = BinaryData.fromObject(new DataObject(message));
+        EventGridEvent event = new EventGridEvent(
+                "Greeting", "Greeting someone", binaryData, "1.0"
+        );
+        eventGridEventClient.sendEvent(event);
+
+        return request.createResponseBuilder(HttpStatus.OK)
+                .body(message).build();
     }
 }

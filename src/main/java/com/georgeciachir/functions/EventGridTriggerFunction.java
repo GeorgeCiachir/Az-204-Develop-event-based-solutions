@@ -1,7 +1,7 @@
 package com.georgeciachir.functions;
 
 import com.azure.messaging.eventgrid.EventGridEvent;
-//import com.azure.messaging.eventgrid.implementation.models.EventGridEvent;
+import com.azure.messaging.eventgrid.systemevents.StorageBlobCreatedEventData;
 import com.microsoft.azure.functions.ExecutionContext;
 import com.microsoft.azure.functions.annotation.EventGridTrigger;
 import com.microsoft.azure.functions.annotation.FunctionName;
@@ -21,6 +21,6 @@ public class EventGridTriggerFunction {
         context.getLogger().info(event.getEventType());
         context.getLogger().info(event.getData().toString());
 
-//        context.getLogger().info(event.toString());
+        StorageBlobCreatedEventData storageBlobCreatedEventData = event.getData().toObject(StorageBlobCreatedEventData.class);
     }
 }
