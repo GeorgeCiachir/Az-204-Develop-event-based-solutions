@@ -222,3 +222,16 @@ In advanced filtering, you specify the:
   ]
 }
 ```
+
+## Steps to subscribe to Azure Event Grid System Topic
+1. Create a topic
+   - in the portal, search for **Event Grid System Topics**
+   - select the topic type (Storage Accounts (Blob & GPv2) IOT, Azure Container Registry etc...). I selected Storage Accounts
+   - then select the storage account in the resource group you want to subscribe to
+2. Create a subscription
+   - on the newly created topic, add a subscription
+   - you need to select here the schema type (I used the classic Event Grid Schema), the events to listen to (Blob created/deleted etc...),
+     and the endpoint details (who listens to the event)
+   - for the endpoint I used :
+     - the EventGridTriggerFunction in the project
+     - plus another subscription for a web hook, using the small SpringBoot app also in this project
