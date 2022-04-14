@@ -11,14 +11,16 @@ import java.util.List;
 public class EventGridTriggerFunction {
 
     @FunctionName("event-grid-function")
-    public void run(@EventGridTrigger(name = "eventGridEvent") EventGridEvent event,
+    public void run(@EventGridTrigger(name = "eventGridEvent") String event,
                     final ExecutionContext context) {
         context.getLogger().info("Java Event Grid trigger function executed.");
 
 //        List<EventGridEvent> events = EventGridEvent.fromString(message);
 //        EventGridEvent event = events.get(0);
 
-        context.getLogger().info(event.getEventType());
-        context.getLogger().info(event.getData().toString());
+//        context.getLogger().info(event.getEventType());
+//        context.getLogger().info(event.getData().toString());
+
+        context.getLogger().info(event);
     }
 }
