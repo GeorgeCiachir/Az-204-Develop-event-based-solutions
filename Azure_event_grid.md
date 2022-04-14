@@ -223,7 +223,10 @@ In advanced filtering, you specify the:
 }
 ```
 
-## Steps to subscribe to Azure Event Grid System Topic
+
+# Example implementations
+
+## Subscribe to Azure Event Grid System Topic
 1. Create a topic
    - in the portal, search for **Event Grid System Topics**
    - select the topic type (Storage Accounts (Blob & GPv2) IOT, Azure Container Registry etc...). I selected Storage Accounts
@@ -232,6 +235,33 @@ In advanced filtering, you specify the:
    - on the newly created topic, add a subscription
    - you need to select here the schema type (I used the classic Event Grid Schema), the events to listen to (Blob created/deleted etc...),
      and the endpoint details (who listens to the event)
-   - for the endpoint I used :
-     - the EventGridTriggerFunction in the project
-     - plus another subscription for a web hook, using the small SpringBoot app also in this project
+   - you can add subject filters. For example, let's say I have an `images` folder in the blob storage, and I want to receive 
+     only the events triggered from here. I can use thi in the `Subject` section of the filter: `/blobServices/default/containers/images`
+     where `/blobServices/default/containers` is essentially boilerplate (but needs to be present)
+   - I actually created 2 subscriptions, so I have 2 endpoints:
+     1. a function endpoint that sends the EventGridEvents to the `EventGridTriggerFunction` in the project
+     2. a webhook endpoint that sends to the `AppController` webhook endpoint. In the controller you must have the code to handle the initial handshake
+3. How it works:
+   - add an image to the blob container
+   - this should trigger:
+     1. **subscription 1** -> the event should be picked up by the `EventGridTriggerFunction`. The function logs some data,
+        wraps the event and forwards it to the custom topic described below, that eventually forwards it to the webhook controller
+     2. **subscription 2** -> the one event should be sent directly to the webhook
+   - So, for each image added from the blob container, the controller will receive 2 events
+
+
+## Subscribe to a custom Event Grid Topic
+1. Create a topic
+  - in the portal, search for **Event Grid Topics**
+  - give it a name, region etc...
+2. create an event subscription
+   - I created a web hook subscription and used my application endpoint `/webhook`. See `AppController` in the project
+   - you must have the code to handle the initial handshake
+   - very important for local debugging
+     - you can use [**ngrok**](https://ngrok.com/)
+     - ngrok creates a https proxy that point to your local host
+     - in the portal you can specify the grok proxy as your endpoint : ` https://81fe-109-166-137-56.eu.ngrok.io/webhook` 
+3. how it works: do a get on the `HttpFunction` from the project
+   - the function should return `Hello [name]`
+   - the function should also send an event to the topic
+   - the topic will use the webhook and will send a http request to the specified endpoint
