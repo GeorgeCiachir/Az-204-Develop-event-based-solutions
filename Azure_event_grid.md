@@ -270,3 +270,5 @@ In advanced filtering, you specify the:
    - the function should return `Hello [name]`
    - the function should also send an event to the topic
    - the topic will use the webhook and will send a http request to the specified endpoint
+
+## [Additional code examples](https://github.com/Azure/azure-sdk-for-java/tree/azure-messaging-eventgrid_4.11.0/sdk/eventgrid/azure-resourcemanager-eventgrid)
