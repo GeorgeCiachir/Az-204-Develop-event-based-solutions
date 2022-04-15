@@ -223,6 +223,11 @@ In advanced filtering, you specify the:
 }
 ```
 
+## [Sending Events To Event Grid Domain](https://docs.microsoft.com/en-us/azure/event-grid/event-domains)
+- An Event Grid Domain can have thousands of topics but has a single endpoint
+- You can use a domain to manage a set of related topics 
+- Sending events to the topics of an Event Grid Domain is the same as sending events to a regular Event Grid Topic except that you need 
+  to specify the topic of an EventGridEvent if the domain accepts EventGridEvent schema.
 
 # Example implementations
 
