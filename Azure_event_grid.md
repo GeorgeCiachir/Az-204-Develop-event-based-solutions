@@ -47,7 +47,7 @@ az provider show --namespace Microsoft.EventGrid --query "registrationState"
   - For Azure Storage Queue, the events are retried until the Queue service successfully processes the message push into the queue
 
 ## Discover event schemas
-- events consist of a set of 4 required string properties which are common to all events from any publisher:
+- events consist of a set of 4 required string properties which are common and **mandatory** to all events from any publisher:
   - id
   - subject
   - eventType
