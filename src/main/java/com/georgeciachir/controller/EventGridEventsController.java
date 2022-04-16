@@ -19,9 +19,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping
-public class AppController {
+public class EventGridEventsController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AppController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EventGridEventsController.class);
 
     @GetMapping("/hello/{name}")
     public String hello(@PathVariable String name) {
