@@ -51,8 +51,8 @@ public class EventHubsProducerController {
         return "Events have been produced and sent as batch";
     }
 
-    @PostMapping("/send/{stringEvent}")
-    public void send(@PathVariable String stringEvent,
+    @PostMapping("/send")
+    public void send(@RequestParam String stringEvent,
                      @RequestParam String partitionId) {
 
 
