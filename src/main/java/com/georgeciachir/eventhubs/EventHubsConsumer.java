@@ -25,10 +25,6 @@ public class EventHubsConsumer {
 
     private static final EventHubConsumerClient EVENT_HUB_CONSUMER_CLIENT = createConsumerClient();
 
-    private static final String BLOB_SAS_TOKEN = "?sv=2020-08-04&ss=bfqt&srt=c&sp=rwdlacupitfx&se=2022-04-17T13:50:45Z&st=2022-04-17T05:50:45Z&spr=https&sig=%2BHPm32gaHpNzXGiQ7pCnaDsByXQvziCwCOPcZEiXnXI%3D";
-    private static final String BLOB_CONNECTION_STRING = "BlobEndpoint=https://storageaccounteventprog.blob.core.windows.net/;QueueEndpoint=https://storageaccounteventprog.queue.core.windows.net/;FileEndpoint=https://storageaccounteventprog.file.core.windows.net/;TableEndpoint=https://storageaccounteventprog.table.core.windows.net/;SharedAccessSignature=sv=2020-08-04&ss=bfqt&srt=c&sp=rwdlacupitfx&se=2022-04-17T13:50:45Z&st=2022-04-17T05:50:45Z&spr=https&sig=%2BHPm32gaHpNzXGiQ7pCnaDsByXQvziCwCOPcZEiXnXI%3D";
-    private static final String BLOB_CONTAINER_NAME = "blobs";
-
     @GetMapping("/pull")
     public String pull(@RequestParam String partitionId,
                        @RequestParam String position,
