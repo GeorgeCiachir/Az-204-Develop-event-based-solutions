@@ -1,3 +1,5 @@
+![img_3.png](img_3.png)
+
 # Event types
 - **Discrete** - **Event Grid** - report state changes and are actionable
 - **Series** - **Event Hub** - report a condition, time-ordered, and analyzable

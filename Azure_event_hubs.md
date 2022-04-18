@@ -1,3 +1,5 @@
+![img_4.png](img_4.png)
+
 # Discover Azure Event Hubs
 - Azure Event Hubs is a **big data** **streaming platform and event processing service**
 - It can receive and process **millions of events per second**
